@@ -32,7 +32,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> findById(@PathVariable String id){
         Optional<Passenger> find = service.findById(id);
         if(find.isEmpty()){
-            throw new IllegalArgumentException("[ERROR] ***Passeneger: " + id + " Doesn't Exist!***");
+            return ResponseEntity.notFound().build();
         }
         else{
             return ResponseEntity.ok(find.get());
@@ -50,7 +50,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> update(@Valid @RequestBody Passenger passenger, @PathVariable String id){
         Optional<Passenger> find = service.findById(id);
         if(find.isEmpty()){
-            throw new IllegalArgumentException("[ERROR] ***Passeneger: " + id + " Doesn't Exist!***");
+            return ResponseEntity.notFound().build();
         }
         else{
             Passenger updated = service.update(find.get());
@@ -63,7 +63,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> delete(@PathVariable String id) {
         Optional<Passenger> find = service.findById(id);
         if (find.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] ***Passeneger: " + id + " Doesn't Exist!***");
+            return ResponseEntity.notFound().build();
         } else {
             Passenger deleted = service.delete(find.get());
             return ResponseEntity.ok(deleted);
