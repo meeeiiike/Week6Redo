@@ -2,6 +2,7 @@ package ie.atu.week5redo.service;
 
 import ie.atu.week5redo.model.Passenger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,14 @@ public class PassengerService {
         }
         passenger.setName(passenger.getName());
         passenger.setEmail(passenger.getEmail());
+        return passenger;
+    }
+
+    public Passenger delete(Passenger passenger){
+        if (findById(passenger.getPassengerId()).isEmpty()) {
+            throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
+        }
+        passengerList.remove(passenger);
         return passenger;
     }
 }
