@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class Passenger {
     @NotBlank@Size(max = 40)
     private String passengerId;
-    @NotBlank@Size(max = 100)
+    @NotBlank(message = " [ERROR] ***Name Cannot be Blank*** ")@Size(max = 100)
     private String name;
-    @Email@NotBlank
+    @Email@NotBlank(message = " [ERROR] ***Email Cannot be Blank*** ")
     private String email;
 }

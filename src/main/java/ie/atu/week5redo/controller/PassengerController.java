@@ -59,4 +59,14 @@ public class PassengerController {
             return ResponseEntity.ok(updated);
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Passenger> delete(@PathVariable String id) {
+        Optional<Passenger> find = service.findById(id);
+        if (find.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] ***Passeneger: " + id + " Doesn't Exist!***");
+        } else {
+            Passenger deleted = service.delete(find.get());
+            return ResponseEntity.ok(deleted);
+        }
+    }
 }
