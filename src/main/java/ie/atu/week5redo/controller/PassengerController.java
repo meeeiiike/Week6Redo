@@ -2,6 +2,7 @@ package ie.atu.week5redo.controller;
 
 import ie.atu.week5redo.model.Passenger;
 import ie.atu.week5redo.service.PassengerService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +41,22 @@ public class PassengerController {
 
     // Create Single Passenger Returning 201
     @PostMapping
-    public ResponseEntity<Passenger> create(@RequestBody Passenger passenger){
+    public ResponseEntity<Passenger> create(@Valid @RequestBody Passenger passenger){
         Passenger created = service.create(passenger);
         return ResponseEntity.created(URI.create("/api/passengers/" + created.getPassengerId())).body(created);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Passenger> update(@Valid @RequestBody Passenger passenger, @PathVariable String id){
+        Optional<Passenger> find = service.findById(id);
+        if(find.isEmpty()){
+            throw new IllegalArgumentException("[ERROR] ***Passeneger: " + id + " Doesn't Exist!***");
+        }
+        else{
+            Passenger updated = service.update(find.get());
+            updated.setName(passenger.getName());
+            updated.setEmail(passenger.getEmail());
+            return ResponseEntity.ok(updated);
+        }
+    }
 }

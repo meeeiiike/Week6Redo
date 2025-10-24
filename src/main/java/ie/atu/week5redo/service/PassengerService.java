@@ -17,9 +17,9 @@ public class PassengerService {
     }
 
     // Uses Optional to avoid Raw Null
-    public Optional<Passenger> findById(String id){
-        for(Passenger p : passengerList){
-            if(p.getPassengerId().equals(id)){
+    public Optional<Passenger> findById(String id) {
+        for (Passenger p : passengerList) {
+            if (p.getPassengerId().equals(id)) {
                 return Optional.of(p);
             }
         }
@@ -27,11 +27,20 @@ public class PassengerService {
     }
 
     // Uses Optional again to check if ID isPresent()
-    public Passenger create(Passenger p){
-        if(findById(p.getPassengerId()).isPresent()){
+    public Passenger create(Passenger passenger) {
+        if (findById(passenger.getPassengerId()).isPresent()) {
             throw new IllegalArgumentException("[WARNING] ***ID Already Exists***");
         }
-        passengerList.add(p);
-        return p;
+        passengerList.add(passenger);
+        return passenger;
+    }
+
+    public Passenger update(Passenger passenger) {
+        if (findById(passenger.getPassengerId()).isEmpty()) {
+            throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
+        }
+        passenger.setName(passenger.getName());
+        passenger.setEmail(passenger.getEmail());
+        return passenger;
     }
 }
