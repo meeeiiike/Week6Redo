@@ -1,5 +1,7 @@
 package ie.atu.week5redo.service;
 
+import ie.atu.week5redo.controller.errorHandling.DuplicateExceptionHandling;
+import ie.atu.week5redo.controller.errorHandling.NotFoundHandling;
 import ie.atu.week5redo.model.Passenger;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class PassengerService {
     // Uses Optional again to check if ID isPresent()
     public Passenger create(Passenger passenger) {
         if (findById(passenger.getPassengerId()).isPresent()) {
-            throw new IllegalArgumentException("[WARNING] ***ID Already Exists***");
+            throw new DuplicateExceptionHandling(" [WARNING] ***ID Already Exists***");
         }
         passengerList.add(passenger);
         return passenger;
@@ -43,13 +45,13 @@ public class PassengerService {
                 return updating;
             }
         }
-    throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
+    throw new NotFoundHandling(" [WARNING] ***ID Doesn't Exist*** ");
     }
 
     public Passenger delete(Passenger passenger){
         boolean removed = passengerList.removeIf(p-> p.getPassengerId().equals(passenger.getPassengerId()));
         if(!removed){
-            throw new IllegalArgumentException(" [WARNING] ***ID Doesnt Exist ");
+            throw new NotFoundHandling(" [WARNING] ***ID Doesnt Exist*** ");
         }
         return passenger;
     }

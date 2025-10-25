@@ -1,5 +1,6 @@
 package ie.atu.week5redo.controller;
 
+import ie.atu.week5redo.controller.errorHandling.NotFoundHandling;
 import ie.atu.week5redo.model.Passenger;
 import ie.atu.week5redo.service.PassengerService;
 import jakarta.validation.Valid;
@@ -31,7 +32,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> findById(@PathVariable String id){
         Optional<Passenger> find = service.findById(id);
         if(find.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundHandling(" [WARNING] ***ID Doesnt Exist*** ");
         }
         else{
             return ResponseEntity.ok(find.get());
@@ -49,7 +50,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> update(@Valid @RequestBody Passenger passenger, @PathVariable String id){
         Optional<Passenger> find = service.findById(id);
         if(find.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new NotFoundHandling(" [WARNING] ***ID Doesnt Exist*** ");
         }
         else{
             passenger.setPassengerId(id); // prevents 5xx code errors
@@ -57,11 +58,12 @@ public class PassengerController {
             return ResponseEntity.ok(updated);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Passenger> delete(@PathVariable String id) {
         Optional<Passenger> find = service.findById(id);
         if (find.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundHandling(" [WARNING] ***ID Doesnt Exist*** ");
         } else {
             Passenger deleted = service.delete(find.get());
             return ResponseEntity.ok(deleted);

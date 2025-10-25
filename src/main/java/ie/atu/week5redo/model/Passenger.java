@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 public class Passenger {
-    @NotBlank
+    @NotBlank(message = " [WARNING] ***ID Cannot be Blank*** ")
     @Size(max = 40)
     private String passengerId;
     @NotBlank(message = " [WARNING] ***Name Cannot be Blank*** ")
