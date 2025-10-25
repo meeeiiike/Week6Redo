@@ -1,5 +1,7 @@
 package ie.atu.week5redo.service;
 
+import ie.atu.week5redo.controller.errorHandling.DuplicateExceptionHandling;
+import ie.atu.week5redo.controller.errorHandling.NotFoundHandling;
 import ie.atu.week5redo.model.Passenger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,7 @@ public class PassengerServiceTest {
         Passenger passenger = Passenger.builder().passengerId("P001").name("meike").email("meike@gmail.com").build();
         service.create(passenger);
         Optional<Passenger> find = service.findById("P001");
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(DuplicateExceptionHandling.class, () ->
                 service.create(Passenger.builder().passengerId("P001").name("meike").email("meike@gmail.com").build()));
     }
     @Test
@@ -53,7 +55,7 @@ public class PassengerServiceTest {
     @Test
     void updateIdNotFound(){
         Passenger passenger = Passenger.builder().passengerId("P100").name("meike").email("meike@gmail.com").build();
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NotFoundHandling.class, () ->
                 service.update(passenger));
     }
 
@@ -70,7 +72,7 @@ public class PassengerServiceTest {
     @Test
     void deleteFailure(){
         Passenger notFound = Passenger.builder().passengerId("P100").name("meike").email("meike@gmail.com").build();
-        assertThrows(IllegalArgumentException.class, () -> service.delete(notFound));
+        assertThrows(NotFoundHandling.class, () -> service.delete(notFound));
     }
 
 }
