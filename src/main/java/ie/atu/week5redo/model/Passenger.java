@@ -10,10 +10,13 @@ import lombok.NoArgsConstructor;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 public class Passenger {
-    @NotBlank@Size(max = 40)
+    @NotBlank
+    @Size(max = 40)
     private String passengerId;
-    @NotBlank(message = " [WARNING] ***Name Cannot be Blank*** ")@Size(max = 100)
+    @NotBlank(message = " [WARNING] ***Name Cannot be Blank*** ")
+    @Size(max = 100)
     private String name;
-    @Email@NotBlank(message = " [WARNING] ***Email Cannot be Blank*** ")
+    @Email(message = " [WARNING] ***Email must not be Blank!***!")
+    @NotBlank(message = " [WARNING] ***Email Cannot be Blank*** ")
     private String email;
 }
