@@ -2,7 +2,6 @@ package ie.atu.week5redo.service;
 
 import ie.atu.week5redo.model.Passenger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,4 +53,5 @@ public class PassengerService {
         }
         return passenger;
     }
+
 }

@@ -3,7 +3,6 @@ package ie.atu.week5redo.controller;
 import ie.atu.week5redo.model.Passenger;
 import ie.atu.week5redo.service.PassengerService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
