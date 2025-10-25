@@ -53,9 +53,8 @@ public class PassengerController {
             return ResponseEntity.notFound().build();
         }
         else{
-            Passenger updated = service.update(find.get());
-            updated.setName(passenger.getName());
-            updated.setEmail(passenger.getEmail());
+            passenger.setPassengerId(id); // prevents 5xx code errors
+            Passenger updated = service.update(passenger);
             return ResponseEntity.ok(updated);
         }
     }
