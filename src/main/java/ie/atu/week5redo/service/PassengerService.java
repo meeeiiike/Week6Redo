@@ -2,7 +2,6 @@ package ie.atu.week5redo.service;
 
 import ie.atu.week5redo.model.Passenger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +36,22 @@ public class PassengerService {
     }
 
     public Passenger update(Passenger passenger) {
-        if (findById(passenger.getPassengerId()).isEmpty()) {
-            throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
+        for(Passenger updating : passengerList){
+            if(updating.getPassengerId().equals(passenger.getPassengerId())){
+                updating.setName(passenger.getName());
+                updating.setEmail(passenger.getEmail());
+                return updating;
+            }
         }
-        passenger.setName(passenger.getName());
-        passenger.setEmail(passenger.getEmail());
-        return passenger;
+    throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
     }
 
     public Passenger delete(Passenger passenger){
-        if (findById(passenger.getPassengerId()).isEmpty()) {
-            throw new IllegalArgumentException("[WARNING] ***ID Doesn't Exist***");
+        boolean removed = passengerList.removeIf(p-> p.getPassengerId().equals(passenger.getPassengerId()));
+        if(!removed){
+            throw new IllegalArgumentException(" [WARNING] ***ID Doesnt Exist ");
         }
-        passengerList.remove(passenger);
         return passenger;
     }
+
 }

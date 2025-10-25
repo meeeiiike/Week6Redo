@@ -3,7 +3,6 @@ package ie.atu.week5redo.controller;
 import ie.atu.week5redo.model.Passenger;
 import ie.atu.week5redo.service.PassengerService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,9 +52,8 @@ public class PassengerController {
             return ResponseEntity.notFound().build();
         }
         else{
-            Passenger updated = service.update(find.get());
-            updated.setName(passenger.getName());
-            updated.setEmail(passenger.getEmail());
+            passenger.setPassengerId(id); // prevents 5xx code errors
+            Passenger updated = service.update(passenger);
             return ResponseEntity.ok(updated);
         }
     }
